@@ -1,0 +1,34 @@
+# Veja https://docs.github.com/en/actions.
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Verifica as ferramentas necessárias
+        run: >
+          maven --version
+          npm --version
+          yarn --version
+
+      # Veja https://github.com/actions/checkout.
+      - name: Faz o checkout do backend
+        uses: actions/checkout@v3
+        with:
+          path: backend
+
+      - name: Faz o checkout do frontend
+        uses: actions/checkout@v3
+        with:
+          repository: ic045-sistemaacademico-2023/frontend-sistema-academico-ic-ufba
+          path: frontend
