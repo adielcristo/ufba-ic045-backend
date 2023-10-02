@@ -65,4 +65,4 @@ jobs:
         name: Instala a aplicação na GCP
         uses: google-github-actions/deploy-appengine@v1
         with:
-          working_directory: ${GITHUB_WORKSPACE}/backend/.gcloud
+          working_directory: backend/.gcloud
