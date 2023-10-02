@@ -42,33 +42,33 @@ jobs:
 
       - name: Compila os arquivos do projeto frontend
         run: |
-          cd ${GITHUB_WORKSPACE}/frontend
+          cd ${{ github.workspace }}/frontend
           yarn
           cp -r \
             ./node_modules \
             ./public \
             ./src \
-            ${GITHUB_WORKSPACE}/backend/src/main/resources
+            ${{ github.workspace }}/backend/src/main/resources
           cp \
             ./index.html \
             ./*.js \
-            ${GITHUB_WORKSPACE}/backend/src/main/resources
+            ${{ github.workspace }}/backend/src/main/resources
 
       - name: Cria o pacote do projeto backend
         run: |
-          cd ${GITHUB_WORKSPACE}/backend
-          rm ${GITHUB_WORKSPACE}/backend/src/main/resources/application.properties
+          cd ${{ github.workspace }}/backend
+          rm ${{ github.workspace }}/backend/src/main/resources/application.properties
           mvn --batch-mode --update-snapshots package
+          cp \
+            ${{ github.workspace }}/backend/target/sistema-academico-0.0.1-SNAPSHOT.jar \
+            ${{ github.workspace }}/backend/.gcloud
 
       - name: Salva o pacote do projeto backend
-        run: |
-          cp \
-            ${GITHUB_WORKSPACE}/backend/target/sistema-academico-0.0.1-SNAPSHOT.jar \
-            ${GITHUB_WORKSPACE}/backend/.gcloud
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: sistema-academico-0.0.1-SNAPSHOT.jar
-          path: .gcloud/sistema-academico-0.0.1-SNAPSHOT.jar
+          path: ${{ github.workspace }}/backend/.gcloud/sistema-academico-0.0.1-SNAPSHOT.jar
+          if-no-files-found: error
 
       - id: auth
         name: Autentica na GCP
@@ -80,4 +80,4 @@ jobs:
         name: Instala a aplicação na GCP
         uses: google-github-actions/deploy-appengine@v1
         with:
-          working_directory: backend/.gcloud
+          working_directory: ${{ github.workspace }}/backend/.gcloud
