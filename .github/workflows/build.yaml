@@ -40,7 +40,7 @@ jobs:
           repository: ic045-sistemaacademico-2023/frontend-sistema-academico-ic-ufba
           path: frontend
 
-      - name: Compila o projeto backend
+      - name: Cria o pacote do projeto backend
         run: |
-          cd backend
-          mvn --batch-mode --update-snapshots sistema-academico
+          cd ${GITHUB_WORKSPACE}/backend
+          mvn --batch-mode --update-snapshots package
