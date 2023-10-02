@@ -65,10 +65,11 @@ jobs:
           cp \
             ${GITHUB_WORKSPACE}/backend/target/sistema-academico-0.0.1-SNAPSHOT.jar \
             ${GITHUB_WORKSPACE}/backend/.gcloud
+          ls -la ${GITHUB_WORKSPACE}/backend/.gcloud
       - uses: actions/upload-artifact@v3
         with:
           name: sistema-academico-0.0.1-SNAPSHOT.jar
-          path: ${GITHUB_WORKSPACE}/backend/.gcloud
+          path: .gcloud
 
       - id: auth
         name: Autentica na GCP
