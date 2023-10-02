@@ -13,6 +13,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    env:
+      BACKEND_PATH: ${{ github.workspace }}/backend
+      FRONTEND_PATH: ${{ github.workspace }}/frontend
 
     steps:
       - name: Configura o JDK 17 x64
@@ -42,32 +45,32 @@ jobs:
 
       - name: Compila os arquivos do projeto frontend
         run: |
-          cd ${{ github.workspace }}/frontend
+          cd ${FRONTEND_PATH}
           yarn
           cp -r \
             ./node_modules \
             ./public \
             ./src \
-            ${{ github.workspace }}/backend/src/main/resources/static
+            ${BACKEND_PATH}/src/main/resources/static
           cp \
             ./index.html \
             ./*.js \
-            ${{ github.workspace }}/backend/src/main/resources/static
+            ${BACKEND_PATH}/src/main/resources/static
 
       - name: Cria o pacote do projeto backend
         run: |
-          cd ${{ github.workspace }}/backend
-          rm ${{ github.workspace }}/backend/src/main/resources/application.properties
+          cd ${BACKEND_PATH}
+          rm ${BACKEND_PATH}/src/main/resources/application.properties
           mvn --batch-mode --update-snapshots package
           cp \
-            ${{ github.workspace }}/backend/target/sistema-academico-0.0.1-SNAPSHOT.jar \
-            ${{ github.workspace }}/backend/.gcloud
+            ${BACKEND_PATH}/target/sistema-academico-0.0.1-SNAPSHOT.jar \
+            ${BACKEND_PATH}/.gcloud
 
       - name: Salva o pacote do projeto backend
         uses: actions/upload-artifact@v3
         with:
-          name: sistema-academico-0.0.1-SNAPSHOT.jar
-          path: ${{ github.workspace }}/backend/.gcloud/sistema-academico-0.0.1-SNAPSHOT.jar
+          name: sistema-academico-0.0.1-SNAPSHOT
+          path: ${BACKEND_PATH}/.gcloud
           if-no-files-found: error
 
       - id: auth
@@ -80,4 +83,4 @@ jobs:
         name: Instala a aplicação na GCP
         uses: google-github-actions/deploy-appengine@v1
         with:
-          working_directory: ${{ github.workspace }}/backend/.gcloud
+          working_directory: ${BACKEND_PATH}/.gcloud
