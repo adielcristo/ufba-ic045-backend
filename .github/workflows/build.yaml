@@ -53,3 +53,9 @@ jobs:
         with:
           name: sistema-academico-0.0.1-SNAPSHOT.jar
           path: staging
+
+      - id: auth
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
