@@ -1,4 +1,4 @@
-# Veja https://docs.github.com/en/actions.
+# See https://docs.github.com/en/actions.
 name: Build
 
 on:
@@ -28,7 +28,7 @@ jobs:
           npm --version
           yarn --version
 
-      # Veja https://github.com/actions/checkout.
+      # See https://github.com/actions/checkout.
       - name: Faz o checkout do backend
         uses: actions/checkout@v4
         with:
@@ -48,11 +48,11 @@ jobs:
             ./node_modules \
             ./public \
             ./src \
-            ${{ github.workspace }}/backend/src/main/resources
+            ${{ github.workspace }}/backend/src/main/resources/static
           cp \
             ./index.html \
             ./*.js \
-            ${{ github.workspace }}/backend/src/main/resources
+            ${{ github.workspace }}/backend/src/main/resources/static
 
       - name: Cria o pacote do projeto backend
         run: |
