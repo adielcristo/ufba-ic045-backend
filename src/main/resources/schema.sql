@@ -1,4 +1,4 @@
-CREATE DATABASE IF NOT EXISTS sistemaacademico;
+CREATE SCHEMA IF NOT EXISTS sistemaacademico;
 
 USE sistemaacademico;
 
@@ -8,7 +8,7 @@ CREATE TABLE `aluno`
     `id_curso`   int          NOT NULL,
     `id_usuario` INT          NOT NULL UNIQUE,
     `nome`       varchar(255) NOT NULL,
-    `cr`         DOUBLE          NOT NULL DEFAULT  0,
+    `cr` DOUBLE NOT NULL DEFAULT 0,
     PRIMARY KEY (`id`)
 );
 
@@ -84,7 +84,7 @@ CREATE TABLE `turma`
     `dias`          varchar(255) NOT NULL,
     `horario`       varchar(255) NOT NULL,
     `local`         varchar(255) NOT NULL,
-    `semestre` int            NOT NULL,
+    `semestre`      int          NOT NULL,
     PRIMARY KEY (`id`)
 );
 
@@ -100,12 +100,11 @@ CREATE TABLE `usuario`
     PRIMARY KEY (`id`)
 );
 
-CREATE TABLE `aluno_turma` (
-                               `id_aluno` INT NOT NULL,
-                               `id_turma` INT NOT NULL,
-                               PRIMARY KEY (`id_aluno`, `id_turma`),
-                               KEY `id_aluno_fk` (`id_aluno`),
-                               KEY `id_turma_fk` (`id_turma`)
+CREATE TABLE `aluno_turma`
+(
+    `id_aluno` INT NOT NULL,
+    `id_turma` INT NOT NULL,
+    PRIMARY KEY (`id_aluno`, `id_turma`)
 );
 
 ALTER TABLE `aluno`

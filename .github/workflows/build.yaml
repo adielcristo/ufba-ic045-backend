@@ -63,14 +63,14 @@ jobs:
           rm ${{ env.BACKEND_PATH }}/src/main/resources/application.properties
           mvn --batch-mode --update-snapshots package
           cp \
-            ${{ env.BACKEND_PATH }}/target/sistema-academico-0.0.1-SNAPSHOT.jar \
+            ${{ env.BACKEND_PATH }}/target/*.jar \
             ${{ env.BACKEND_PATH }}/.gcloud
 
       - name: Salva o pacote do projeto backend
         uses: actions/upload-artifact@v3
         with:
           name: sistema-academico-0.0.1-SNAPSHOT
-          path: ${{ env.BACKEND_PATH }}/.gcloud
+          path: ${{ env.BACKEND_PATH }}/.gcloud/*.jar
           if-no-files-found: error
 
       - id: auth
