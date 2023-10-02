@@ -45,32 +45,32 @@ jobs:
 
       - name: Compila os arquivos do projeto frontend
         run: |
-          cd ${FRONTEND_PATH}
+          cd ${{ env.FRONTEND_PATH }}
           yarn
           cp -r \
             ./node_modules \
             ./public \
             ./src \
-            ${BACKEND_PATH}/src/main/resources/static
+            ${{ env.BACKEND_PATH }}/src/main/resources/static
           cp \
             ./index.html \
             ./*.js \
-            ${BACKEND_PATH}/src/main/resources/static
+            ${{ env.BACKEND_PATH }}/src/main/resources/static
 
       - name: Cria o pacote do projeto backend
         run: |
-          cd ${BACKEND_PATH}
-          rm ${BACKEND_PATH}/src/main/resources/application.properties
+          cd ${{ env.BACKEND_PATH }}
+          rm ${{ env.BACKEND_PATH }}/src/main/resources/application.properties
           mvn --batch-mode --update-snapshots package
           cp \
-            ${BACKEND_PATH}/target/sistema-academico-0.0.1-SNAPSHOT.jar \
-            ${BACKEND_PATH}/.gcloud
+            ${{ env.BACKEND_PATH }}/target/sistema-academico-0.0.1-SNAPSHOT.jar \
+            ${{ env.BACKEND_PATH }}/.gcloud
 
       - name: Salva o pacote do projeto backend
         uses: actions/upload-artifact@v3
         with:
           name: sistema-academico-0.0.1-SNAPSHOT
-          path: ${BACKEND_PATH}/.gcloud
+          path: ${{ env.BACKEND_PATH }}/.gcloud
           if-no-files-found: error
 
       - id: auth
@@ -83,4 +83,4 @@ jobs:
         name: Instala a aplicação na GCP
         uses: google-github-actions/deploy-appengine@v1
         with:
-          working_directory: ${BACKEND_PATH}/.gcloud
+          working_directory: ${{ env.BACKEND_PATH }}/.gcloud
