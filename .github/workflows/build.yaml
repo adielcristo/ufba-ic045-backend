@@ -23,9 +23,10 @@ jobs:
           architecture: x64
 
       - name: Verifica as ferramentas necessárias
-      - run: mvn --version
-      - run: npm --version
-      - run: yarn --version
+        run: |
+          mvn --version
+          npm --version
+          yarn --version
 
       # Veja https://github.com/actions/checkout.
       - name: Faz o checkout do backend
