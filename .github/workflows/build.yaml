@@ -47,15 +47,22 @@ jobs:
 
       - name: Salva o pacote do projeto backend
         run: |
-          mkdir ${GITHUB_WORKSPACE}/staging
-          cp ${GITHUB_WORKSPACE}/backend/target/sistema-academico-0.0.1-SNAPSHOT.jar ${GITHUB_WORKSPACE}/staging
+          cp \
+            ${GITHUB_WORKSPACE}/backend/target/sistema-academico-0.0.1-SNAPSHOT.jar \
+            ${GITHUB_WORKSPACE}/backend/.gcloud
       - uses: actions/upload-artifact@v3
         with:
           name: sistema-academico-0.0.1-SNAPSHOT.jar
-          path: staging
+          path: ${GITHUB_WORKSPACE}/backend/.gcloud
 
       - id: auth
-        name: Authenticate to GCP
+        name: Autentica na GCP
         uses: google-github-actions/auth@v1
         with:
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+      - id: deploy
+        name: Instala a aplicação na GCP
+        uses: google-github-actions/deploy-appengine@v1
+        with:
+          working_directory: ${GITHUB_WORKSPACE}/backend/.gcloud
