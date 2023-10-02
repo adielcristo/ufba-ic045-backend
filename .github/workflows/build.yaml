@@ -55,7 +55,7 @@ jobs:
           path: staging
 
       - id: auth
-      - name: Authenticate to GCP
+        name: Authenticate to GCP
         uses: google-github-actions/auth@v1
         with:
           credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
