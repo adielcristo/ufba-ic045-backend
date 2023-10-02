@@ -40,9 +40,24 @@ jobs:
           repository: ic045-sistemaacademico-2023/frontend-sistema-academico-ic-ufba
           path: frontend
 
+      - name: Compila os arquivos do projeto frontend
+        run: |
+          cd ${GITHUB_WORKSPACE}/frontend
+          yarn
+          cp -r \
+            ./node_modules \
+            ./public \
+            ./src \
+            ${GITHUB_WORKSPACE}/backend/src/main/resources
+          cp \
+            ./index.html \
+            ./*.js \
+            ${GITHUB_WORKSPACE}/backend/src/main/resources
+
       - name: Cria o pacote do projeto backend
         run: |
           cd ${GITHUB_WORKSPACE}/backend
+          rm ${GITHUB_WORKSPACE}/backend/src/main/resources/application.properties
           mvn --batch-mode --update-snapshots package
 
       - name: Salva o pacote do projeto backend
