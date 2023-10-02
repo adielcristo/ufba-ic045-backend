@@ -59,11 +59,12 @@ jobs:
           cd ${GITHUB_WORKSPACE}/backend
           rm ${GITHUB_WORKSPACE}/backend/src/main/resources/application.properties
           mvn --batch-mode --update-snapshots package
+
+      - name: Salva o pacote do projeto backend
+        run: |
           cp \
             ${GITHUB_WORKSPACE}/backend/target/sistema-academico-0.0.1-SNAPSHOT.jar \
             ${GITHUB_WORKSPACE}/backend/.gcloud
-
-      - name: Salva o pacote do projeto backend
       - uses: actions/upload-artifact@v3
         with:
           name: sistema-academico-0.0.1-SNAPSHOT.jar
