@@ -64,10 +64,10 @@ jobs:
             ${GITHUB_WORKSPACE}/backend/.gcloud
 
       - name: Salva o pacote do projeto backend
-        uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v3
         with:
           name: sistema-academico-0.0.1-SNAPSHOT.jar
-          path: ${GITHUB_WORKSPACE}/backend/.gcloud/sistema-academico-0.0.1-SNAPSHOT.jar
+          path: .gcloud/sistema-academico-0.0.1-SNAPSHOT.jar
 
       - id: auth
         name: Autentica na GCP
